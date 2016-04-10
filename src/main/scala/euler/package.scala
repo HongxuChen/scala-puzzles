@@ -2,7 +2,7 @@
 
 package object euler {
 
-  def timeIt[A](block: => A, seconds: Int = 2, chunk: Int = 100, round: Int = 2): A = {
+  def timeIt[A](block: => A, seconds: Int, chunk: Int, round: Int): A = {
     var dummy: Any = 0
     for (i <- 0 to round) {
       val start = System.nanoTime()
@@ -17,10 +17,15 @@ package object euler {
       }
       val duration = System.nanoTime() - start
       if (i != 0) {
-        println(f"round=$i%d, counter=$counter%d, average=${duration.toDouble / counter}%.2fns")
+        println(f"time=$seconds%ds, round=$i%d, counter=$counter%d, average=${duration.toDouble / counter / 1e6}%.4fms")
       }
     }
     block
+  }
+
+  def pTimeIt[A](block: => A, seconds: Int = 1, chunk: Int = 100, round: Int = 2): Unit = {
+    val res = timeIt(block, seconds, chunk, round)
+    println(s"res=$res")
   }
 
 }

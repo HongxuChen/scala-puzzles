@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import euler._
 
 object Euler002 {
 
@@ -23,9 +25,8 @@ object Euler002 {
 
   def main(args: Array[String]): Unit = {
     val max = 40000000
-    val r1 = timeIt(f1(max))
-    val r2 = timeIt(f2(max))
-    println(s"r1=$r1, r2=$r2")
+    pTimeIt(f1(max))
+    pTimeIt(f2(max))
   }
 
 }

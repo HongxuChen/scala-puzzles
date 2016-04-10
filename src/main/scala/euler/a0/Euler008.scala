@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import euler._
 
 object Euler008 extends App {
 
@@ -48,9 +50,8 @@ object Euler008 extends App {
   def f3(str: String, chunk: Int) = str.map(_.toLong - 48L).sliding(chunk).map(_.product).max
 
 
-  val r1 = timeIt(f1(s, 13))
-  val r2 = timeIt(f2(s, 13))
-  val r3 = timeIt(f2(s, 13))
-  println(s"$r1 $r2 $r3")
+  pTimeIt(f1(s, 13))
+  pTimeIt(f2(s, 13))
+  pTimeIt(f2(s, 13))
 
 }

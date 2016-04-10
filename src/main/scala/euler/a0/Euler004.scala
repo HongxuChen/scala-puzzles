@@ -54,8 +54,7 @@ object Euler004 extends App {
   }
 
   val range = (100, 999)
-  val r1 = timeIt(f_while(range))
-  val r2 = timeIt(f_for(range))
-  println(s"$r1, $r2")
+  pTimeIt(f_while(range))
+  pTimeIt(f_for(range))
 
 }

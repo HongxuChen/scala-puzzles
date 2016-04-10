@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import euler._
 
 import scala.collection.mutable
 
@@ -38,8 +40,7 @@ object Euler003 extends App {
 
 
   val num = 600851475143L
-  val r1 = timeIt(f1(num))
-  val r2 = timeIt(f2(num))
-  println(s"$r1, $r2")
+  pTimeIt(f1(num))
+  pTimeIt(f2(num))
 
 }

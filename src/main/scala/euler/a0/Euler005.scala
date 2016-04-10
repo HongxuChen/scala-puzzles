@@ -1,10 +1,15 @@
-package euler
+package euler.a0
+
+import euler._
+
+import scala.annotation.tailrec
 
 object Euler005 extends App {
 
+  @tailrec
   def gcd(a: Int, b: Int): Int = {
     (a, b) match {
-      case (`a`, 0) => a
+      case (_, 0) => a
       case _ => gcd(b, a % b)
     }
   }
@@ -17,8 +22,7 @@ object Euler005 extends App {
   def f(max: Int) = (1 until max).foldRight(max)((res, ele) => lcm(res, ele))
 
   val max = 20
-  val r = timeIt(f(max))
-  println(r)
+  pTimeIt(f(max))
 
 
 }

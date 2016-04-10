@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import euler._
 
 import scala.util.control.Breaks._
 
@@ -49,7 +51,6 @@ object Euler007 extends App {
   }
 
   val max = 10001
-  val r1 = timeIt(f1(max), round = 3)
-  val r2 = timeIt(f2(max), round = 3)
-  println(s"$r1 $r2")
+  pTimeIt(f1(max), round = 3)
+  pTimeIt(f2(max), round = 3)
 }

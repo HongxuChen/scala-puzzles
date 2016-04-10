@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import euler._
 
 import scala.util.control.Breaks._
 
@@ -24,7 +26,6 @@ object Euler009 extends App {
     res
   }
 
-  val r = timeIt(f(1000))
-  println(r)
+  pTimeIt(f(1000))
 
 }

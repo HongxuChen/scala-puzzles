@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import euler._
 
 object Euler010 extends App {
   def do1(a: Array[Int], offSet: Int): Unit = {
@@ -32,7 +34,5 @@ object Euler010 extends App {
   }
 
   val n = 2000000
-  //  val res = f(n)
-  val res = timeIt(f(n))
-  println(res)
+  pTimeIt(f(n))
 }
