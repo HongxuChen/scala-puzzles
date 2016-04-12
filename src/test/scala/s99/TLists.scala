@@ -88,6 +88,8 @@ class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with Parallel
   }
 
   "duplicate" should "Duplicate the elements of a list." in {
+    duplicate(Nil) should be(Nil)
+    duplicate(List(Nil)) should be(List(Nil, Nil))
     duplicate(List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
   }
 
@@ -104,7 +106,21 @@ class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with Parallel
   }
 
   "slice" should "Extract a slice from a list." in {
-    slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g))
+    val ll = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
+    slice(3, 7, ll) should be(List('d, 'e, 'f, 'g))
+    slice(-1, 100, ll) should be(ll)
   }
+
+  "rotate" should "Rotate a list N places to the left." in {
+    rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+    rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+  }
+
+  "removeAt" should "Remove the Kth element from a list." in {
+    val ll = List('a, 'b, 'c, 'd)
+    removeAt(1, ll) should be((List('a, 'c, 'd), 'b))
+    removeAt(0, ll) should be((List('b, 'c, 'd), 'a))
+  }
+
 
 }

@@ -69,13 +69,13 @@ object SLists {
   }
 
   // 08
+  // FIXME complexity
   def compress[A](l: List[A]): List[A] = {
     if (l.length < 2) l
     else {
       var previous = l.head
       val bl = ListBuffer(previous)
-      for (i <- 1 until l.length) {
-        val current = l(i)
+      for (current <- l.tail) {
         if (previous != current) {
           bl += current
         }
@@ -88,10 +88,9 @@ object SLists {
   private def eleCounter[A](l: List[A]): List[(A, Int)] = {
     type PackTy = (A, Int)
     var previous = l.head
-    var (current, num): PackTy = (l.head, 1)
+    var num = 1
     val bl = ListBuffer.empty[PackTy]
-    for (i <- 1 until l.length) {
-      current = l(i)
+    for (current <- l.tail) {
       if (previous != current) {
         bl += previous -> num
         num = 1
@@ -108,9 +107,7 @@ object SLists {
   def pack[A](l: List[A]): List[List[A]] = {
     l.length match {
       case 0 => Nil
-      case _ => {
-        eleCounter(l).map(e => List.fill(e._2)(e._1))
-      }
+      case _ => eleCounter(l).map(e => List.fill(e._2)(e._1))
     }
   }
 
@@ -151,15 +148,28 @@ object SLists {
   // 17
   def split[A](n: Int, l: List[A]): (List[A], List[A]) = {
     val left, right = ListBuffer.empty[A]
-    for (i <- l.indices) {
-      if (i < n) left += l(i)
-      else right += l(i)
+    for ((e, i) <- l.zipWithIndex) {
+      if (i < n) left += e
+      else right += e
     }
     left.toList -> right.toList
   }
 
   // 18
-  def slice[A](start: Int, end: Int, l: List[A]): List[A] = List.range(start, end).map(l(_))
+  def slice[A](start: Int, end: Int, l: List[A]): List[A] = for ((e, i) <- l.zipWithIndex; if i >= start && i < end) yield e
 
+
+  // 19
+  def rotate[A](n: Int, l: List[A]): List[A] = {
+    val pivot = if (n < 0) length(l) + n else n
+    val (left, right) = split(pivot, l)
+    right ++ left
+  }
+
+  // 20
+  def removeAt[A](n: Int, l: List[A]): (List[A], A) = {
+    val (left, right) = split(n, l)
+    (left ++ right.tail, right.head)
+  }
 
 }
