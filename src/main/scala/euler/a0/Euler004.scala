@@ -1,4 +1,6 @@
-package euler
+package euler.a0
+
+import utils.Bench._
 
 import scala.util.control.Breaks._
 

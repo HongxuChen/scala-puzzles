@@ -1,5 +1,6 @@
-package euler
-package a1
+package euler.a1
+
+import utils.Bench._
 
 import scala.collection.mutable
 import scalaz._

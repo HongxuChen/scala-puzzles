@@ -1,8 +1,6 @@
 package euler.a0
 
-import euler._
-
-import scala.util.control.Breaks._
+import utils.Bench._
 
 object Euler007 extends App {
 
@@ -36,12 +34,10 @@ object Euler007 extends App {
         count += 1
         count
       }).withFilter(isPrime).foreach(i => {
-        breakable {
-          if (order < num) {
-            order += 1
-          } else {
-            throw new EndExcept(i)
-          }
+        if (order < num) {
+          order += 1
+        } else {
+          throw new EndExcept(i)
         }
       })
     } catch {

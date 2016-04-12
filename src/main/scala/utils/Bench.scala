@@ -1,6 +1,7 @@
+package utils
 
 
-package object euler {
+object Bench {
 
   def timeIt[A](block: => A, seconds: Int, chunk: Int, round: Int): A = {
     var dummy: Any = 0

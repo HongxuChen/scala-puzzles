@@ -1,8 +1,10 @@
-package euler
-package a1
+package euler.a1
 
 import scala.annotation.tailrec
 import scala.collection.mutable
+
+import utils.Bench._
+
 
 object Euler014 extends App {
   type KeyTy = Long

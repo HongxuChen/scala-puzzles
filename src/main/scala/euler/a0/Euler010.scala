@@ -1,6 +1,6 @@
 package euler.a0
 
-import euler._
+import utils.Bench._
 
 object Euler010 extends App {
   def do1(a: Array[Int], offSet: Int): Unit = {

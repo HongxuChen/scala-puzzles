@@ -1,6 +1,6 @@
 package euler.a0
 
-import euler._
+import utils.Bench._
 
 object Euler006 extends App {
   def f1(n: Int): Long = {
