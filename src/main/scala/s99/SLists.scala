@@ -1,16 +1,14 @@
 package s99
 
-import java.util.NoSuchElementException
-
 import scala.annotation.tailrec
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable
 
 object SLists {
 
   // 01
   @tailrec
   def last[A](l: List[A]): A = l match {
-    case Nil => throw new NoSuchElementException
+    case Nil => throw new IndexOutOfBoundsException
     case head :: Nil => head
     case head :: tail => last(tail)
   }
@@ -18,8 +16,8 @@ object SLists {
   // 02
   @tailrec
   def penultimate[A](l: List[A]): A = l match {
-    case Nil => throw new NoSuchElementException
-    case head :: Nil => throw new NoSuchElementException
+    case Nil => throw new IndexOutOfBoundsException
+    case head :: Nil => throw new IndexOutOfBoundsException
     case res :: last :: Nil => res
     case head :: tail => penultimate(tail)
   }
@@ -69,12 +67,11 @@ object SLists {
   }
 
   // 08
-  // FIXME complexity
   def compress[A](l: List[A]): List[A] = {
     if (l.length < 2) l
     else {
       var previous = l.head
-      val bl = ListBuffer(previous)
+      val bl = mutable.ListBuffer(previous)
       for (current <- l.tail) {
         if (previous != current) {
           bl += current
@@ -89,7 +86,7 @@ object SLists {
     type PackTy = (A, Int)
     var previous = l.head
     var num = 1
-    val bl = ListBuffer.empty[PackTy]
+    val bl = mutable.ListBuffer.empty[PackTy]
     for (current <- l.tail) {
       if (previous != current) {
         bl += previous -> num
@@ -141,13 +138,12 @@ object SLists {
     case e => List.fill(n)(e)
   }
 
-  //////////////////////////////////////////////////////////////////////
   // 16
   def drop[A](n: Int, l: List[A]): List[A] = for ((e, i) <- l.zip(l.indices.map(_ % n)); if i + 1 != n) yield e
 
   // 17
   def split[A](n: Int, l: List[A]): (List[A], List[A]) = {
-    val left, right = ListBuffer.empty[A]
+    val left, right = mutable.ListBuffer.empty[A]
     for ((e, i) <- l.zipWithIndex) {
       if (i < n) left += e
       else right += e
@@ -170,6 +166,66 @@ object SLists {
   def removeAt[A](n: Int, l: List[A]): (List[A], A) = {
     val (left, right) = split(n, l)
     (left ++ right.tail, right.head)
+  }
+
+  // 21
+  def insertAt[A](e: A, n: Int, l: List[A]): List[A] = {
+    val (left, right) = split(n, l)
+    (left :+ e) ++ right
+  }
+
+  // 22
+  def range(start: Int, end: Int): List[Int] = (start to end).toList
+
+  // 23
+  def randomSelect[A](n: Int, l: List[A]): List[A] = {
+    val r = util.Random
+    val fullLength = l.length
+    var counter = 0
+    var previous = l
+    val lb = mutable.ListBuffer.empty[A]
+    while (counter < n) {
+      val index = r.nextInt(fullLength - counter)
+      val res = removeAt(index, previous)
+      previous = res._1
+      lb += res._2
+      counter += 1
+    }
+    lb.toList
+  }
+
+  // 24
+  def lotto(n: Int, max: Int): List[Int] = randomSelect(n, (1 to max).toList)
+
+  // 25
+  def randomPermute[A](l: List[A]): List[A] = randomSelect(l.length, l)
+
+  // 26
+  def combinations[A](n: Int, l: List[A]): List[List[A]] = {
+    val length = l.length
+    if (n <= 0 || n > length) Nil
+    else if (n == 0 || n == length) List(l)
+    else {
+      combinations(n - 1, l.tail).map(l.head :: _) ::: combinations(n, l.tail)
+    }
+  }
+
+  // 27
+  def group[A](s: List[A], l: List[A]): List[List[List[A]]] = {
+    Nil
+  }
+
+  // 28
+  def lsort[A](l: List[List[A]]): List[List[A]] = l.sortBy(_.length)
+
+  def lsortFreq[A](l: List[List[A]]): List[List[A]] = {
+    val compound = l.map(i => i -> i.length)
+    val m = mutable.Map.empty[Int, Int]
+    for ((_, len) <- compound) {
+      val freq = m.getOrElse(len, 0)
+      m += len -> (freq + 1)
+    }
+    compound.sortWith((a, b) => m(a._2) < m(b._2)).map(_._1)
   }
 
 }

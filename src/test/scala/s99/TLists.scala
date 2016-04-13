@@ -1,8 +1,6 @@
 package s99
 
-import org.scalatest.words.{MatcherWords => _}
-import org.scalatest.{words => _, _}
-
+import org.scalatest._
 
 class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with ParallelTestExecution {
 
@@ -12,28 +10,34 @@ class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with Parallel
   import SLists.{length => sLength, _}
 
   "last" should "Find the last element of a list." in {
-    last(l1) should be(8)
-    a[NoSuchElementException] should be thrownBy last(Nil)
+    last(l1) should be(l1.last)
+    intercept[IndexOutOfBoundsException] {
+      last(Nil)
+    }
   }
 
   "penultimate" should "Find the last but one element of a list." in {
     penultimate(l1) should be(5)
     for (l <- List(List("str"), Nil)) {
-      a[NoSuchElementException] should be thrownBy penultimate(l)
+      intercept[IndexOutOfBoundsException] {
+        penultimate(l)
+      }
     }
   }
 
   "nth" should "Find the Kth element of a list." in {
-    nth(2, l1) should be(2)
-    nth(0, l1) should be(1)
+    nth(2, l1) should be(l1(2))
+    nth(0, l1) should be(l1.head)
     for (i <- List(-1, 10)) {
-      a[IndexOutOfBoundsException] should be thrownBy nth(i, l1)
+      intercept[IndexOutOfBoundsException] {
+        nth(i, l1)
+      }
     }
   }
 
   "length" should "Find the number of elements of a list." in {
     sLength(Nil) should be(0)
-    sLength(l1) should be(6)
+    sLength(l1) should be(l1.length)
   }
 
   "reverse" should "Reverse a list." in {
@@ -120,6 +124,58 @@ class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with Parallel
     val ll = List('a, 'b, 'c, 'd)
     removeAt(1, ll) should be((List('a, 'c, 'd), 'b))
     removeAt(0, ll) should be((List('b, 'c, 'd), 'a))
+  }
+
+  "insertAt" should "Insert an element at a given position into a list." in {
+    insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
+  }
+
+  "range" should "Create a list containing all integers within a given range." in {
+    "range('a, 'c)" shouldNot compile
+    range(4, 9) should be(List(4, 5, 6, 7, 8, 9))
+  }
+
+  "randomSelect" should "Extract a given number of randomly selected elements from a list." in {
+    val inList = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
+    val res = randomSelect(3, inList)
+    res should have length 3
+    res.forall(inList.contains(_)) should be(true)
+  }
+
+  "lotto" should "Lotto: Draw N different random numbers from the set 1..M." in {
+    val num = 6
+    val max = 49
+    val res = lotto(num, max)
+    res should have length num
+    res.forall(e => e <= max && e >= 0)
+  }
+
+  "randomPermute" should "Generate a random permutation of the elements of a list." in {
+    val inList = List('a, 'b, 'c, 'd, 'e, 'f)
+    val outList = randomPermute(inList)
+    inList.sortBy(_.name) == outList.sortBy(_.name) should be(true)
+  }
+
+  "combinations" should "Generate the combinations of K distinct objects chosen from the N elements of a list." in {
+    val l = List('a, 'b, 'c, 'd, 'e, 'f)
+    val builtinCombinations = l.combinations(3).toList
+    val comb = combinations(3, l)
+    comb should have length comb.length
+    comb.forall(builtinCombinations.contains(_)) should be(true)
+    combinations(6, l) should be(List(l))
+    comb shouldBe a[List[_]]
+  }
+
+  "group3" should "Group the elements of a set into disjoint subsets." ignore {
+    val l = List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida")
+    val res = group(List(2, 2, 5), List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
+    res.length should be(1260)
+  }
+
+  "lsort lsortFreq" should "Sorting a list of lists according to length of sublists." in {
+    val l = List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o))
+    lsort(l) should be(List(List('o), List('d, 'e), List('d, 'e), List('m, 'n), List('a, 'b, 'c), List('f, 'g, 'h), List('i, 'j, 'k, 'l)))
+    lsortFreq(l) should be(List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n)))
   }
 
 
