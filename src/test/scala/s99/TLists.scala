@@ -1,8 +1,6 @@
 package s99
 
-import org.scalatest._
-
-class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with ParallelTestExecution {
+class TLists extends BaseSpec {
 
   val l1 = List(1, 1, 2, 3, 5, 8)
   val l2 = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
@@ -168,7 +166,7 @@ class TLists extends FlatSpec with BeforeAndAfterAll with Matchers with Parallel
 
   "group3" should "Group the elements of a set into disjoint subsets." ignore {
     val l = List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida")
-    val res = group(List(2, 2, 5), List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
+    val res = group(List(2, 2, 5), l)
     res.length should be(1260)
   }
 

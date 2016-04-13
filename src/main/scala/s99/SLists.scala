@@ -210,7 +210,7 @@ object SLists {
     }
   }
 
-  // 27
+  // 27 TODO
   def group[A](s: List[A], l: List[A]): List[List[List[A]]] = {
     Nil
   }
