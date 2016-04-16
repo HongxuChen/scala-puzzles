@@ -63,7 +63,8 @@ class TLists extends BaseSpec {
 
   "pack" should "Pack consecutive duplicates of list elements into sublists." in {
     pack(Nil) should be(Nil)
-    pack(l2) should be(List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e)))
+    val expected = List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e))
+    pack(l2) should be(expected)
     pack(List(Nil, 'a, 'b, 'c, 'c)) should be(List(List(Nil), List('a), List('b), List('c, 'c)))
     pack(List('a)) should be(List(List('a)))
     pack(List('b, 'a)) should be(List(List('b), List('a)))

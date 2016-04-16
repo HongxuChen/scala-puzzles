@@ -5,13 +5,49 @@ import scala.collection.mutable
 
 object SLists {
 
+
   // 01
   @tailrec
-  def last[A](l: List[A]): A = l match {
+  def last[A](xs: List[A]): A = xs match {
     case Nil => throw new IndexOutOfBoundsException
-    case head :: Nil => head
-    case head :: tail => last(tail)
+    case List(x) => x
+    case y :: ys => last(ys)
   }
+
+  //////////////////////////////////////////////////////
+  def init[A](xs: List[A]): List[A] = xs match {
+    case Nil => throw new IndexOutOfBoundsException
+    case List(x) => Nil
+    case y :: ys => y :: init(ys)
+  }
+
+  // TODO tailrec???
+  def concat[A](xs: List[A], ys: List[A]): List[A] = xs match {
+    case Nil => ys
+    case z :: zs => z :: concat(zs, ys)
+  }
+
+  def msort[A](xs: List[A])(implicit ord: Ordering[A]): List[A] = {
+    def merge(xs: List[A], ys: List[A]): List[A] = (xs, ys) match {
+      case (Nil, _) => ys
+      case (_, Nil) => xs
+      case (x :: xs1, y :: ys1) => if (ord.lt(x, y)) x :: merge(xs1, ys) else y :: merge(xs, ys1)
+    }
+    xs.length / 2 match {
+      case 0 => xs
+      case n => {
+        val (fst, snd) = xs splitAt n
+        merge(msort(fst), msort(snd))
+      }
+    }
+  }
+
+  def mapFun[T, U](xs: List[T], f: T => U): List[U] = (xs foldRight List.empty[U]) ((a: T, b: List[U]) => f(a) :: b)
+
+  def lengthFun[T](xs: List[T]): Int = (xs foldRight 0) ((_, len) => 1 + len)
+
+
+  //////////////////////////////////////////////////////
 
   // 02
   @tailrec
@@ -101,10 +137,12 @@ object SLists {
   }
 
   // 09
-  def pack[A](l: List[A]): List[List[A]] = {
-    l.length match {
-      case 0 => Nil
-      case _ => eleCounter(l).map(e => List.fill(e._2)(e._1))
+
+  def pack[A](xs: List[A]): List[List[A]] = xs match {
+    case Nil => Nil
+    case x :: xs1 => {
+      val (first, rest) = xs span (y => y == x)
+      first :: pack(rest)
     }
   }
 
