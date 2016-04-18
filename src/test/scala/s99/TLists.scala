@@ -144,9 +144,11 @@ class TLists extends BaseSpec {
   "lotto" should "Lotto: Draw N different random numbers from the set 1..M." in {
     val num = 6
     val max = 49
-    val res = lotto(num, max)
-    res should have length num
-    res.forall(e => e <= max && e >= 0)
+    for (i <- 0 to 20) {
+      val res = lotto(num, max)
+      res should have length num
+      res.forall(e => e <= max && e >= 0) should be(true)
+    }
   }
 
   "randomPermute" should "Generate a random permutation of the elements of a list." in {
