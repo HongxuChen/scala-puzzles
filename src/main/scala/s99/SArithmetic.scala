@@ -60,7 +60,15 @@ object SArithmetic {
       (primeFactorMultiplicity map { case (factor, count) => (factor - 1) * power(factor, count - 1) }).product
     }
 
+    // 40
+    def goldbach: (Int, Int) = {
+      val first = Stream.range(3, num).dropWhile(i => !i.isPrime || !(num - i).isPrime).head
+      (first, num - first)
+    }
+
   }
+
+  // implicit class
 
   // 32
   def gcd(a: Int, b: Int): Int = (a, b) match {
@@ -69,8 +77,8 @@ object SArithmetic {
     case (_, _) => gcd(b, a % b)
   }
 
-  // 38
-  def compareTotient(num:Int) = {
+  // 38print
+  def compareTotient(num: Int) = {
     def timed[A](thunk: => A): (A, Long) = {
       val startTime = System.nanoTime()
       val res = thunk
@@ -80,6 +88,55 @@ object SArithmetic {
     (timed(num.totient), timed(num.totientImproved))
   }
 
+  // 39
 
+  def listPrimesinRange(m: Int, n: Int): List[Int] = {
+    def sieve(m: Int, n: Int, step: Int, primeArray: Array[Boolean]): Unit = {
+      val start = {
+        if (m <= step) {
+          2 * step
+        } else {
+          val pre = (m / step) * step
+          if (pre == m) {
+            pre
+          } else {
+            pre + step
+          }
+        }
+      }
+      Range(start, n + 1, step).foreach(i => primeArray(i - m) = false)
+    }
 
+    def simpleSieve(num: Int): IndexedSeq[Int] = {
+      val basicPrimes = Array.fill(num - 1)(true)
+      for {
+        i <- 2 to num
+        if basicPrimes(i - 2)
+        j <- i * 2 to num by i
+      } basicPrimes(j - 2) = false
+      for {
+        j <- basicPrimes.indices
+        if basicPrimes(j)
+      } yield j + 2
+    }
+    val primeArray = Array.fill(n - m + 1)(true)
+
+    val basicPrimes = simpleSieve(math.sqrt(n).toInt)
+    //    for(p<- basicPrimes)sieve(m, n, p, primeArray)
+    basicPrimes.foreach(p => sieve(m, n, p, primeArray))
+    if (m == 1) {
+      primeArray(0) = false
+    }
+    val res = for (j <- primeArray.indices; if primeArray(j)) yield j + m
+    res.toList
+  }
+
+  // 41
+  def printGoldbachList(m: Int, n: Int) = {
+    for (i <- List.range(m, n + 1); if i % 2 == 0) yield (i, i.goldbach)
+  }
+
+  def printGoldbachListLimited(m: Int, n: Int, threshold: Int) = {
+    for (i <- List.range(math.max(m, threshold), n + 1); if i % 2 == 0; v = i.goldbach; if v._1 > threshold) yield (i, v)
+  }
 }

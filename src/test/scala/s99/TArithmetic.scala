@@ -50,4 +50,18 @@ class TArithmetic extends BaseSpec {
     r1._1 should be(r1._1)
     r1._2 should be > r2._2
   }
+
+  "listPrimesinRange" should "return A list of prime numbers." in {
+    listPrimesinRange(7, 31) should be(List(7, 11, 13, 17, 19, 23, 29, 31))
+  }
+
+  "goldbach" should "deals with Goldbach's conjecture." in {
+    28.goldbach should be((5, 23))
+    30.goldbach should be((7, 23))
+  }
+
+  "printGoldbachList" should "generates A list of Goldbach compositions." in {
+    printGoldbachList(9, 20) should be(List((10, (3, 7)), (12, (5, 7)), (14, (3, 11)), (16, (3, 13)), (18, (5, 13)), (20, (3, 17))))
+    printGoldbachListLimited(1, 2000, 50) should have length 4
+  }
 }
