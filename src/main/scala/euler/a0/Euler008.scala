@@ -30,9 +30,9 @@ object Euler008 extends App {
     var max = 0L
     for (s <- ss) {
       var i = 0
-      val a = s.map(_.toLong - 48L)
+      val a = s.map(_ - 48)
       while (i + chunk <= a.length) {
-        val cur = a.slice(i, i + chunk).product
+        val cur = a.slice(i, i + chunk).foldLeft(1L)(_ * _)
         if (max < cur) max = cur
         i += 1
       }

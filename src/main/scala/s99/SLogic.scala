@@ -29,7 +29,7 @@ object SLogic {
   def table(f: (Boolean, Boolean) => Boolean) = {
     println("A\t\tB\t\tresult")
     for (a <- Array(true, false); b <- Array(true, false)) {
-      println(f"$a%8b$b%8b${f(a, b)}")
+      println(f"$a%-8b$b%-8b${f(a, b)}")
     }
   }
 
@@ -50,6 +50,7 @@ object SLogic {
   }
 
   // 50 TODO
+  // https://www.siggraph.org/education/materials/HyperGraph/video/mpeg/mpegfaq/huffman_tutorial.html
   def huffman(l: List[(String, Int)]): List[(String, String)] = {
     abstract class CodeTree
     val sortedList = l.sortWith((a, b) => a._2 < b._2)
