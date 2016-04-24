@@ -21,7 +21,7 @@ object Bench {
         println(f"time=$seconds%ds, round=$i%d, counter=$counter%d, average=${duration.toDouble / counter / 1e6}%.4fms")
       }
     }
-    block
+    dummy.asInstanceOf[A]
   }
 
   def pTimeIt[A](block: => A, seconds: Int = 1, chunk: Int = 100, round: Int = 2): Unit = {

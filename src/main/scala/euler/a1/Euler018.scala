@@ -9,15 +9,9 @@ object Euler018 {
   val triangle = triangleStr.split("\\s+").map(_.toInt)
 }
 
-object Euler067 {
+object Euler067 extends utils.Common {
 
-  import java.io.File
-
-  private val file = {
-    val src = s"src${File.separator}main${File.separator}scala"
-    val dir = getClass.getName.replaceAll("\\.\\w+\\$$", "").replace('.', File.separatorChar)
-    src + File.separator + dir + File.separator + "p067_triangle.txt"
-  }
+  private val file = curDir + "p067_triangle.txt"
 
   private val lines = Source.fromFile(file).getLines().toArray
   val triangle = for {
