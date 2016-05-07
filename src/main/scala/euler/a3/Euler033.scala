@@ -1,19 +1,22 @@
 package euler.a3
 
 object Euler033 extends App {
-  //
+
+  def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+
   def f = {
-    val N = 10000
-    val sqrt = math.sqrt(N).toInt
-    val pl = for {
-      i <- 2 to sqrt; j <- 2 to N / i; p = i * j
-      s = i.toString + j.toString + p.toString; ss = s.toSet
-      if s.length == 9 && ss.size == 9 && !s.contains('0')
-    } yield p
-    pl.distinct.sum
+    val l = for {
+      i <- 11 to 99; if i % 10 != 0; is = i.toString
+      j <- i + 1 to 99; if j % 10 != 0; js = j.toString
+      iis <- is; if js.contains(iis)
+      di = is.replaceFirst(iis.toString, "").head.asDigit
+      dj = js.replaceFirst(iis.toString, "").head.asDigit
+      if di * j == dj * i
+    } yield (di, dj)
+    val res = ((1, 1) /: l) ((x, y) => (x._1 * y._1, x._2 * y._2))
+    res._2 / gcd(res._1, res._2)
   }
 
-  import utils.Bench._
-  pTimeIt(f)
+  println(f)
 
 }
