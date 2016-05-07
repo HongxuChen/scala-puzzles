@@ -1,6 +1,7 @@
 package euler.a2
 
 import scala.collection.mutable
+import scala.math.BigInt
 
 // http://mathworld.wolfram.com/DecimalExpansion.html
 
@@ -12,14 +13,14 @@ object Euler026 extends App {
     coPrime(coPrime(n, 2), 5)
   }
 
+  val bigZero = BigInt(0)
+
   def kPower(n: Int) = {
-    var k = 1
-    var res = BigInt(10)
-    while ((res - 1) % n != 0) {
-      res *= 10
-      k += 1
+    def inner(k: Int, res: BigInt): (Int, BigInt) = (res - 1) % n match {
+      case `bigZero` => (k, res)
+      case _ => inner(k + 1, res * 10)
     }
-    k
+    inner(1, BigInt(10))._1
   }
 
   def f(n: Int) = {
