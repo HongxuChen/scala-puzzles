@@ -26,16 +26,16 @@ object Euler003 extends App {
   }
 
   def f2(num: Long): Long = {
-    def f2_inner(num: Long, divisor: Long): Set[Long] = {
+    def inner(num: Long, divisor: Long): Set[Long] = {
       num % divisor match {
-        case 0 => f2_inner(num / divisor, divisor)
+        case 0 => inner(num / divisor, divisor)
         case _ => {
           if (divisor > math.sqrt(num)) Set(num)
-          else f2_inner(num, divisor + 1)
+          else inner(num, divisor + 1)
         }
       }
     }
-    f2_inner(num, 2).max
+    inner(num, 2).max
   }
 
 

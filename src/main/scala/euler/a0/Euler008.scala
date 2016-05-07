@@ -52,6 +52,5 @@ object Euler008 extends App {
 
   pTimeIt(f1(s, 13))
   pTimeIt(f2(s, 13))
-  pTimeIt(f2(s, 13))
 
 }
