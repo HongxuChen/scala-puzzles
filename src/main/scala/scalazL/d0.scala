@@ -1,3 +1,5 @@
+package scalazL
+
 object d0 extends App {
 
   trait Monoid[A] {

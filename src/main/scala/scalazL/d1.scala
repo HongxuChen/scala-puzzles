@@ -1,3 +1,5 @@
+package scalazL
+
 import scalaz.Scalaz._
 import scalaz._
 
