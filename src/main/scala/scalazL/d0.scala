@@ -1,5 +1,7 @@
 package scalazL
 
+import scala.language.{higherKinds, implicitConversions}
+
 object d0 extends App {
 
   trait Monoid[A] {
