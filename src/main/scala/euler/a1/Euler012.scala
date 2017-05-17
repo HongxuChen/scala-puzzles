@@ -15,7 +15,7 @@ object Euler012 extends App {
   }
 
   def getNumOfDivisors(num: Int): Int = {
-    var m = mutable.Map.empty[Int, Int]
+    val m = mutable.Map.empty[Int, Int]
     var index = 2
     var current = num
     while (index <= current) {

@@ -19,7 +19,7 @@ object Euler002 {
   }
 
   def f2(max: Int): Long = {
-    lazy val fs: Stream[Int] = 0 #:: fs.scanLeft(1)(_ + _)
+    lazy val fs: Stream[Long] = 0L #:: fs.scanLeft(1L)(_ + _)
     fs.view.takeWhile(_ <= max).filter(_ % 2 == 0).sum
   }
 

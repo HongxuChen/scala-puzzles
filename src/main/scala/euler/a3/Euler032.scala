@@ -2,9 +2,9 @@ package euler.a3
 
 object Euler032 extends App {
   //
-  def f = {
+  def f: Int = {
     val N = 10000
-    val sqrt = math.sqrt(N).toInt
+    val sqrt = math.sqrt(N.toDouble).toInt
     val pl = for {
       i <- 2 to sqrt; j <- 2 to N / i; p = i * j
       s = i.toString + j.toString + p.toString; ss = s.toSet

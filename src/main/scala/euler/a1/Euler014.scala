@@ -17,7 +17,7 @@ object Euler014 extends App {
     @inline
     def getChain(n: Int, m: MapTy): EleTy = {
       var current = n.toLong
-      var buf = mutable.ArrayBuffer.empty[KeyTy]
+      val buf = mutable.ArrayBuffer.empty[KeyTy]
       do {
         buf += current
         current = if (current % 2 == 0) current / 2 else 3 * current + 1
@@ -33,7 +33,7 @@ object Euler014 extends App {
     val m = mutable.Map[KeyTy, ValueTy](1L -> 1)
     var res: (Int, ValueTy) = (0, 0)
     for (i <- 2 to n) {
-      if (!m.contains(i)) {
+      if (!m.contains(i.toLong)) {
         val cur = getChain(i, m)
         if (res._2 < cur._2) {
           res = cur
@@ -52,12 +52,12 @@ object Euler014 extends App {
       }
     }
 
-    (1 until n).view.map(n => (n, from(n)))
+    (1 until n).view.map(n => (n, from(n.toLong)))
       .reduceLeft((a, b) => if (a._2 > b._2) a else b)._1
   }
 
   val n = 1000000
   //  pTimeIt(f1(n), seconds = 1, round = 2, chunk = 2)
-  pTimeIt(f2(n), seconds = 1, round = 2, chunk = 2)
+  pTimeIt(f2(n), chunk = 2)
 
 }

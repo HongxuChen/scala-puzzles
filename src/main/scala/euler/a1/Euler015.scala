@@ -3,9 +3,10 @@ package euler.a1
 import utils.Bench._
 
 import scala.collection.mutable
-import scalaz._
 
-
+/**
+  * @todo write my own memo version
+  */
 object Euler015 extends App {
   type MyTy = (Int, Int)
 
@@ -13,16 +14,7 @@ object Euler015 extends App {
   // down(0) takes n steps and right(1) n steps, all valid movements contain n 0s and n 1s
   // therefore 2*n chooses n
 
-  def f1(n: Int) = {
-    //    NOTE: exactly the property of combinatorics!!!
-    lazy val inner: MyTy => Long = Memo.mutableHashMapMemo[MyTy, Long] {
-      case (0, _) | (_, 0) => 1L
-      case (i, j) => inner(i, j - 1) + inner(i - 1, j)
-    }
-    inner(n, n)
-  }
-
-  def myF1(n: Int) = {
+  def f1(n: Int): Long = {
     val cache = mutable.Map.empty[MyTy, Long]
     def inner(res: MyTy): Long = {
       res match {
@@ -31,17 +23,17 @@ object Euler015 extends App {
           if (cache.contains(res)) {
             cache(res)
           } else {
-            val current = inner(i, j - 1) + inner(i - 1, j)
+            val current = inner((i, j - 1)) + inner((i - 1, j))
             cache += res -> current
             current
           }
         }
       }
     }
-    inner(n, n)
+    inner((n, n))
   }
 
-  def f2(n: Int) = {
+  def f2(n: Int): BigInt = {
     val r = 1 to n
     r.foldLeft(BigInt(1))((p, i) => p * (i + n)) / r.foldLeft(BigInt(1))(_ * _)
   }

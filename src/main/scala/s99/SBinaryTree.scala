@@ -5,7 +5,7 @@ object SBinaryTree {
   sealed abstract class Tree[+T]
 
   case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
-    override def toString = "T(" + value.toString + " " + left.toString + " " + right.toString + ")"
+    override def toString: String = "T(" + value.toString + " " + left.toString + " " + right.toString + ")"
   }
 
   case object End extends Tree[Nothing] {
@@ -26,9 +26,9 @@ object SBinaryTree {
 
     // 55 TODO
     def cBalanced(n: Int, s: String): List[Node[String]] = {
-      val h = log2(n + 1)
-      val total = pow2(h) - 1
-      val remaining = n - total
+//      val h = log2(n + 1)
+//      val total = pow2(h) - 1
+//      val remaining = n - total
       Nil
     }
   }

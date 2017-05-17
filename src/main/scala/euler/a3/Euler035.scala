@@ -12,7 +12,7 @@ object Euler035 extends App {
   }
 
   def f(n: Int): Int = {
-    val lengthArr = Array.fill(math.log10(n).toInt + 1)(10).scanLeft(1)(_ * _)
+    val lengthArr = Array.fill(math.log10(n.toDouble).toInt + 1)(10).scanLeft(1)(_ * _)
     val arr = Array.range(0, n + 1)
     for (i <- 2 to n; if arr(i) != 0) for (j <- i * 2 to n by i) arr(j) = 0
     var counter = 0

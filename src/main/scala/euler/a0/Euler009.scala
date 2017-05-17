@@ -6,7 +6,7 @@ import scala.util.control.Breaks._
 
 object Euler009 extends App {
 
-  def f(m: Int) = {
+  def f(m: Int): Int = {
     var res = 0
     for (a <- 1 to m / 3) {
       breakable {
@@ -15,7 +15,7 @@ object Euler009 extends App {
         val b = d / n
         if (b * n == d) {
           val cSquare = a * a + b * b
-          val c = math.sqrt(cSquare).toInt
+          val c = math.sqrt(cSquare.toDouble).toInt
           if (c * c == cSquare) {
             res = a * b * c
             break

@@ -3,30 +3,33 @@ package s99
 object SLogic {
 
   // 46
-  def and(a: Boolean, b: Boolean): Boolean = a match {
-    case true => b
-    case false => false
+  def and(a: Boolean, b: Boolean): Boolean = if (a) {
+    b
+  } else {
+    false
   }
 
-  def or(a: Boolean, b: Boolean): Boolean = a match {
-    case false => b
-    case true => true
+  def or(a: Boolean, b: Boolean): Boolean = if (a) {
+    true
+  } else {
+    b
   }
 
-  def nand(a: Boolean, b: Boolean) = !and(a, b)
+  def nand(a: Boolean, b: Boolean): Boolean = !and(a, b)
 
-  def nor(a: Boolean, b: Boolean) = !or(a, b)
+  def nor(a: Boolean, b: Boolean): Boolean = !or(a, b)
 
-  def xor(a: Boolean, b: Boolean) = if (a == b) false else true
+  def xor(a: Boolean, b: Boolean): Boolean = if (a == b) false else true
 
-  def impl(a: Boolean, b: Boolean) = a match {
-    case false => true
-    case true => b
+  def impl(a: Boolean, b: Boolean): Boolean = if (a) {
+    b
+  } else {
+    true
   }
 
-  def equ(a: Boolean, b: Boolean) = !xor(a, b)
+  def equ(a: Boolean, b: Boolean): Boolean = !xor(a, b)
 
-  def table(f: (Boolean, Boolean) => Boolean) = {
+  def table(f: (Boolean, Boolean) => Boolean): Unit = {
     println("A\t\tB\t\tresult")
     for (a <- Array(true, false); b <- Array(true, false)) {
       println(f"$a%-8b$b%-8b${f(a, b)}")
@@ -52,8 +55,8 @@ object SLogic {
   // 50 TODO
   // https://www.siggraph.org/education/materials/HyperGraph/video/mpeg/mpegfaq/huffman_tutorial.html
   def huffman(l: List[(String, Int)]): List[(String, String)] = {
-    abstract class CodeTree
-    val sortedList = l.sortWith((a, b) => a._2 < b._2)
+//    abstract class CodeTree
+//    val sortedList = l.sortWith((a, b) => a._2 < b._2)
     Nil
   }
 

@@ -11,13 +11,13 @@ object SLists {
   def last[A](xs: List[A]): A = xs match {
     case Nil => throw new IndexOutOfBoundsException
     case List(x) => x
-    case y :: ys => last(ys)
+    case _ :: ys => last(ys)
   }
 
   //////////////////////////////////////////////////////
   def init[A](xs: List[A]): List[A] = xs match {
     case Nil => throw new IndexOutOfBoundsException
-    case List(x) => Nil
+    case List(_) => Nil
     case y :: ys => y :: init(ys)
   }
 
@@ -53,18 +53,19 @@ object SLists {
   @tailrec
   def penultimate[A](l: List[A]): A = l match {
     case Nil => throw new IndexOutOfBoundsException
-    case head :: Nil => throw new IndexOutOfBoundsException
-    case res :: last :: Nil => res
-    case head :: tail => penultimate(tail)
+    case _ :: Nil => throw new IndexOutOfBoundsException
+    case res :: _ :: Nil => res
+    case _ :: tail => penultimate(tail)
   }
 
   // 03
   def nth[A](n: Int, l: List[A]): A = {
+    @tailrec
     def inner(k: Int, l: List[A]): A = k match {
       case `n` => l.head
       case _ => l match {
         case Nil => throw new IndexOutOfBoundsException
-        case head :: tail => inner(k + 1, tail)
+        case _ :: tail => inner(k + 1, tail)
       }
     }
     n match {
@@ -78,7 +79,7 @@ object SLists {
     @tailrec
     def inner(l: List[A], length: Int): Int = l match {
       case Nil => length
-      case head :: tail => inner(tail, length + 1)
+      case _ :: tail => inner(tail, length + 1)
     }
     inner(l, 0)
   }
@@ -140,7 +141,7 @@ object SLists {
 
   def pack[A](xs: List[A]): List[List[A]] = xs match {
     case Nil => Nil
-    case x :: xs1 => {
+    case x :: _ => {
       val (first, rest) = xs span (y => y == x)
       first :: pack(rest)
     }

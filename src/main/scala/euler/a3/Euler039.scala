@@ -8,14 +8,14 @@ object Euler039 extends App {
     case a :: b :: tail => if (a == b) encode(b :: tail, acc, count + 1) else encode(b :: tail, (count + 1, a) :: acc, 0)
   }
 
-  def getSqrt(l: Int, h: Int, p: Int) = Stream.range(l, h).dropWhile(i => i * i != p).headOption
+  def getSqrt(l: Int, h: Int, p: Int): Option[Int] = Stream.range(l, h).dropWhile(i => i * i != p).headOption
 
-  def f(max: Int) = {
+  def f(max: Int): Int = {
     val l = (for {
       i <- 3 to max / 3
       j <- i + 1 to max / 2
       prod = i * i + j * j
-      sqrt = math.ceil(math.sqrt(prod)).toInt
+      sqrt = math.ceil(math.sqrt(prod.toDouble)).toInt
       if sqrt * sqrt == prod
       res = i + j + sqrt
       if res <= max
